@@ -7,8 +7,11 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "WinBridgeServicesProvider.h"
 
 int main(int argc, char *argv[])
 {
-    return NSApplicationMain(argc, (const char **)argv);
+    NSRegisterServicesProvider([[WinBridgeServicesProvider alloc] init], @"WinBridge");
+    [[NSRunLoop currentRunLoop] run];
+    return 0;
 }
