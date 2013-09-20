@@ -13,19 +13,36 @@
 
 - (void)convertFromUNC:(NSPasteboard*)pboard userData:(NSString*)userData error:(NSString**)error
 {
-    if (![pboard canReadObjectForClasses:@[[NSString class]] options:@{}]) {
-        *error = @"Please select a string";
-        return;
-    }
-    
-    NSString* source = [pboard stringForType:NSPasteboardTypeString];
-    NSString* target = [WBUNC stringFromUNC:source];
-    NSLog(@"convertFromUNC: source=%@, target=%@", source, target);
+    NSString* target = [self convertFromUNCCore:pboard error:error];
     if (!target)
         return;
 
     [pboard clearContents];
     [pboard writeObjects:@[target]];
+}
+
+- (void)copyFromUNC:(NSPasteboard*)pboard userData:(NSString*)userData error:(NSString**)error
+{
+    NSString* target = [self convertFromUNCCore:pboard error:error];
+    if (!target)
+        return;
+
+    NSPasteboard *generalPasteboard = [NSPasteboard generalPasteboard];
+    [generalPasteboard declareTypes:@[NSStringPboardType] owner:nil];
+    [generalPasteboard setString:target forType:NSStringPboardType];
+}
+
+- (NSString*)convertFromUNCCore:(NSPasteboard*)pboard error:(NSString**)error
+{
+    if (![pboard canReadObjectForClasses:@[[NSString class]] options:@{}]) {
+        *error = @"Please select a string";
+        return nil;
+    }
+    
+    NSString* source = [pboard stringForType:NSPasteboardTypeString];
+    NSString* target = [WBUNC stringFromUNC:source];
+    NSLog(@"convertFromUNC: source=%@, target=%@", source, target);
+    return target;
 }
 
 @end
