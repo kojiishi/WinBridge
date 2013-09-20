@@ -17,7 +17,9 @@
 
     const unichar* szSrc = (const unichar*)[source cStringUsingEncoding:NSUTF16StringEncoding];
     NSUInteger cchSrcMax = [source maximumLengthOfBytesUsingEncoding:NSUTF16StringEncoding];
-    unichar* pchDst = (unichar*)alloca(cchSrcMax + 4 * sizeof(unichar));
+    const size_t cbDst = cchSrcMax + 4 * sizeof(unichar);
+    unichar* pchDst = (unichar*)alloca(cbDst);
+    unichar* pchDst0 = pchDst;
     unichar* pchDstMin = NULL;
     unichar* pchDstLim = NULL;
     while (true) {
@@ -45,6 +47,7 @@
         }
         *pchDst++ = ch;
     }
+    assert(pchDst - pchDst0 <= cbDst);
 
     if (!pchDstMin)
         return nil;
