@@ -7,6 +7,7 @@
 //
 
 #import "WinBridgeServicesProvider.h"
+#import "WBUNC.h"
 
 @implementation WinBridgeServicesProvider
 
@@ -18,10 +19,11 @@
     }
     
     NSString* source = [pboard stringForType:NSPasteboardTypeString];
-    NSLog(@"convertFromUNC: source=%@", source);
-    NSString* target = [source uppercaseString];
+    NSString* target = [WBUNC stringFromUNC:source];
+    NSLog(@"convertFromUNC: source=%@, target=%@", source, target);
+    if (!target)
+        return;
 
-    NSLog(@"convertFromUNC: target=%@", target);
     [pboard clearContents];
     [pboard writeObjects:@[target]];
 }
