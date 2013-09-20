@@ -32,6 +32,19 @@
     [generalPasteboard setString:target forType:NSStringPboardType];
 }
 
+- (void)openUNC:(NSPasteboard*)pboard userData:(NSString*)userData error:(NSString**)error
+{
+    NSString* target = [self convertFromUNCCore:pboard error:error];
+    if (!target)
+        return;
+
+    NSURL* url = [NSURL URLWithString:target];
+    NSURL* folder = [url URLByDeletingLastPathComponent];
+    [[NSWorkspace sharedWorkspace] openURL:folder];
+    [[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:@[url]];
+    [[NSWorkspace sharedWorkspace] openURL:url];
+}
+
 - (NSString*)convertFromUNCCore:(NSPasteboard*)pboard error:(NSString**)error
 {
     if (![pboard canReadObjectForClasses:@[[NSString class]] options:@{}]) {
