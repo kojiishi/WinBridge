@@ -22,6 +22,7 @@
     unichar* pchDst0 = pchDst;
     unichar* pchDstMin = NULL;
     unichar* pchDstLim = NULL;
+    bool hasStartChar = false;
     while (true) {
         unichar ch = *szSrc++;
         if (!ch)
@@ -42,8 +43,17 @@
             continue;
         }
 
-        if (!pchDstMin)
+        if (!pchDstMin) {
+            if (ch == '<')
+                hasStartChar = true;
+            else if (!isspace(ch))
+                hasStartChar = false;
             continue;
+        }
+
+        // Check termination character
+        if (hasStartChar && ch == '>')
+            break;
 
         // Keep track of the last non-spacing position.
         if (!isspace(ch))
