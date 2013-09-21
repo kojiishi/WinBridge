@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface WBUNC : NSObject
+@interface NSURL (SMB)
 
 + (NSString*)stringFromUNC:(NSString*)source;
 

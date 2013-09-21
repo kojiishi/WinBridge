@@ -8,7 +8,7 @@
 
 #import "WBUNC.h"
 
-@implementation WBUNC
+@implementation NSURL (SMB)
 
 + (NSString*)stringFromUNC:(NSString*)source
 {
