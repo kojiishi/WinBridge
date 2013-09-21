@@ -47,7 +47,7 @@
         }
         *pchDst++ = ch;
     }
-    assert(pchDst - pchDst0 <= cbDst);
+    assert((void*)pchDst - (void*)pchDst0 <= cbDst);
 
     if (!pchDstMin)
         return nil;
