@@ -41,7 +41,7 @@
 				<string>Convert Windows Path</string>
 			</dict>
 			<key>NSMessage</key>
-			<string>convertFromUNC</string>
+			<string>convertUNC</string>
 			<key>NSPortName</key>
 			<string>WinBridge</string>
 			<key>NSReturnTypes</key>
@@ -57,15 +57,14 @@
 			<key>NSMenuItem</key>
 			<dict>
 				<key>default</key>
-				<string>Copy from Windows Path</string>
+				<string>Copy Windows Path</string>
 			</dict>
 			<key>NSMessage</key>
-			<string>copyFromUNC</string>
+			<string>copyUNC</string>
 			<key>NSPortName</key>
 			<string>WinBridge</string>
 			<key>NSRequiredContext</key>
-			<array>
-			</array>
+			<array/>
 			<key>NSSendTypes</key>
 			<array>
 				<string>NSStringPboardType</string>
@@ -82,8 +81,7 @@
 			<key>NSPortName</key>
 			<string>WinBridge</string>
 			<key>NSRequiredContext</key>
-			<array>
-			</array>
+			<array/>
 			<key>NSSendTypes</key>
 			<array>
 				<string>NSStringPboardType</string>

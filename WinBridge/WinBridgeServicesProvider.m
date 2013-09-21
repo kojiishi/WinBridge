@@ -11,9 +11,9 @@
 
 @implementation WinBridgeServicesProvider
 
-- (void)convertFromUNC:(NSPasteboard*)pboard userData:(NSString*)userData error:(NSString**)error
+- (void)convertUNC:(NSPasteboard*)pboard userData:(NSString*)userData error:(NSString**)error
 {
-    NSString* target = [self convertFromUNCCore:pboard error:error];
+    NSString* target = [self stringWithUNC:pboard error:error];
     if (!target)
         return;
 
@@ -21,9 +21,9 @@
     [pboard writeObjects:@[target]];
 }
 
-- (void)copyFromUNC:(NSPasteboard*)pboard userData:(NSString*)userData error:(NSString**)error
+- (void)copyUNC:(NSPasteboard*)pboard userData:(NSString*)userData error:(NSString**)error
 {
-    NSString* target = [self convertFromUNCCore:pboard error:error];
+    NSString* target = [self stringWithUNC:pboard error:error];
     if (!target)
         return;
 
@@ -34,7 +34,7 @@
 
 - (void)openUNC:(NSPasteboard*)pboard userData:(NSString*)userData error:(NSString**)error
 {
-    NSString* target = [self convertFromUNCCore:pboard error:error];
+    NSString* target = [self stringWithUNC:pboard error:error];
     if (!target)
         return;
 
@@ -45,7 +45,7 @@
     [[NSWorkspace sharedWorkspace] openURL:url];
 }
 
-- (NSString*)convertFromUNCCore:(NSPasteboard*)pboard error:(NSString**)error
+- (NSString*)stringWithUNC:(NSPasteboard*)pboard error:(NSString**)error
 {
     if (![pboard canReadObjectForClasses:@[[NSString class]] options:@{}]) {
         *error = @"Please select a string";
