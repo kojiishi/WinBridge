@@ -53,7 +53,7 @@
     }
     
     NSString* source = [pboard stringForType:NSPasteboardTypeString];
-    NSString* target = [NSURL stringFromUNC:source];
+    NSString* target = [NSURL stringWithUNC:source];
     NSLog(@"convertFromUNC: source=%@, target=%@", source, target);
     return target;
 }

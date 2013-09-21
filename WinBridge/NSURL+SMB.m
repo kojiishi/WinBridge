@@ -10,7 +10,7 @@
 
 @implementation NSURL (SMB)
 
-+ (NSString*)stringFromUNC:(NSString*)source
++ (NSString*)stringWithUNC:(NSString*)source
 {
     if (!source)
         return nil;

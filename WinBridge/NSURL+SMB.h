@@ -10,6 +10,6 @@
 
 @interface NSURL (SMB)
 
-+ (NSString*)stringFromUNC:(NSString*)source;
++ (NSString*)stringWithUNC:(NSString*)source;
 
 @end
