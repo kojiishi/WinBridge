@@ -7,7 +7,7 @@
 //
 
 #import "WinBridgeServicesProvider.h"
-#import "WBUNC.h"
+#import "NSURL+SMB.h"
 
 @implementation WinBridgeServicesProvider
 

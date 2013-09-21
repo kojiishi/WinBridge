@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Koji Ishii. All rights reserved.
 //
 
-#import "WBUNC.h"
+#import "NSURL+SMB.h"
 
 @implementation NSURL (SMB)
 

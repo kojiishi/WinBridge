@@ -7,7 +7,7 @@
 //
 
 #import "WinBridgeTests.h"
-#import "WBUNC.h"
+#import "NSURL+SMB.h"
 
 @implementation WinBridgeTests
 
