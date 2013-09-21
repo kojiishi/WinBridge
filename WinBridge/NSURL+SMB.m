@@ -26,6 +26,8 @@
         unichar ch = *szSrc++;
         if (!ch)
             break;
+
+        // Find "\\" as the beginning of UNC, or transform to "/" if in the middle.
         if (ch == '\\') {
             if (!pchDstMin) {
                 if (*szSrc != '\\')
@@ -39,12 +41,16 @@
             *pchDst++ = '/';
             continue;
         }
-        if (pchDstMin) {
-            if (!isspace(ch))
-                pchDstLim = NULL;
-            else if (!pchDstLim)
-                pchDstLim = pchDst;
-        }
+
+        if (!pchDstMin)
+            continue;
+
+        // Keep track of the last non-spacing position.
+        if (!isspace(ch))
+            pchDstLim = NULL;
+        else if (!pchDstLim)
+            pchDstLim = pchDst;
+
         *pchDst++ = ch;
     }
     assert((void*)pchDst - (void*)pchDst0 <= cbDst);
