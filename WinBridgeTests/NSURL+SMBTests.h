@@ -8,6 +8,6 @@
 
 #import <SenTestingKit/SenTestingKit.h>
 
-@interface WinBridgeTests : SenTestCase
+@interface NSURL_SMBTests : SenTestCase
 
 @end

@@ -6,10 +6,10 @@
 //  Copyright (c) 2013 Koji Ishii. All rights reserved.
 //
 
-#import "WinBridgeTests.h"
+#import "NSURL+SMBTests.h"
 #import "NSURL+SMB.h"
 
-@implementation WinBridgeTests
+@implementation NSURL_SMBTests
 
 - (void)setUp
 {

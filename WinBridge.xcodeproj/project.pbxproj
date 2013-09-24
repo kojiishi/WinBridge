@@ -14,7 +14,7 @@
 		CE8D8EA317EC93D300118497 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE8D8EA217EC93D300118497 /* SenTestingKit.framework */; };
 		CE8D8EA417EC93D300118497 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE8D8E8417EC93D200118497 /* Cocoa.framework */; };
 		CE8D8EAC17EC93D300118497 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = CE8D8EAA17EC93D300118497 /* InfoPlist.strings */; };
-		CE8D8EAF17EC93D300118497 /* WinBridgeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CE8D8EAE17EC93D300118497 /* WinBridgeTests.m */; };
+		CE8D8EAF17EC93D300118497 /* NSURL+SMBTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CE8D8EAE17EC93D300118497 /* NSURL+SMBTests.m */; };
 		CEEF3CEC17ECB36D0064D73D /* WinBridgeServicesProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = CEEF3CEB17ECB36D0064D73D /* WinBridgeServicesProvider.m */; };
 /* End PBXBuildFile section */
 
@@ -44,8 +44,8 @@
 		CE8D8EA217EC93D300118497 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		CE8D8EA917EC93D300118497 /* WinBridgeTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "WinBridgeTests-Info.plist"; sourceTree = "<group>"; };
 		CE8D8EAB17EC93D300118497 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		CE8D8EAD17EC93D300118497 /* WinBridgeTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WinBridgeTests.h; sourceTree = "<group>"; };
-		CE8D8EAE17EC93D300118497 /* WinBridgeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WinBridgeTests.m; sourceTree = "<group>"; };
+		CE8D8EAD17EC93D300118497 /* NSURL+SMBTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSURL+SMBTests.h"; sourceTree = "<group>"; };
+		CE8D8EAE17EC93D300118497 /* NSURL+SMBTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSURL+SMBTests.m"; sourceTree = "<group>"; };
 		CEEF3CEA17ECB36D0064D73D /* WinBridgeServicesProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WinBridgeServicesProvider.h; sourceTree = "<group>"; };
 		CEEF3CEB17ECB36D0064D73D /* WinBridgeServicesProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WinBridgeServicesProvider.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -136,8 +136,8 @@
 		CE8D8EA717EC93D300118497 /* WinBridgeTests */ = {
 			isa = PBXGroup;
 			children = (
-				CE8D8EAD17EC93D300118497 /* WinBridgeTests.h */,
-				CE8D8EAE17EC93D300118497 /* WinBridgeTests.m */,
+				CE8D8EAD17EC93D300118497 /* NSURL+SMBTests.h */,
+				CE8D8EAE17EC93D300118497 /* NSURL+SMBTests.m */,
 				CE8D8EA817EC93D300118497 /* Supporting Files */,
 			);
 			path = WinBridgeTests;
@@ -268,7 +268,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE8D8EAF17EC93D300118497 /* WinBridgeTests.m in Sources */,
+				CE8D8EAF17EC93D300118497 /* NSURL+SMBTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
