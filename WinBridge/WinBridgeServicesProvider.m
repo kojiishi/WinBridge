@@ -13,7 +13,7 @@
 
 - (void)convertUNC:(NSPasteboard*)pboard userData:(NSString*)userData error:(NSString**)error
 {
-    NSString* target = [self stringWithUNC:pboard error:error];
+    NSString* target = [NSURL stringWithPasteboardUNC:pboard error:error];
     if (!target)
         return;
 
@@ -23,7 +23,7 @@
 
 - (void)copyUNC:(NSPasteboard*)pboard userData:(NSString*)userData error:(NSString**)error
 {
-    NSString* target = [self stringWithUNC:pboard error:error];
+    NSString* target = [NSURL stringWithPasteboardUNC:pboard error:error];
     if (!target)
         return;
 
@@ -34,7 +34,7 @@
 
 - (void)openUNC:(NSPasteboard*)pboard userData:(NSString*)userData error:(NSString**)error
 {
-    NSString* target = [self stringWithUNC:pboard error:error];
+    NSString* target = [NSURL stringWithPasteboardUNC:pboard error:error];
     if (!target)
         return;
 
@@ -43,19 +43,6 @@
     [[NSWorkspace sharedWorkspace] openURL:folder];
     [[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:@[url]];
     [[NSWorkspace sharedWorkspace] openURL:url];
-}
-
-- (NSString*)stringWithUNC:(NSPasteboard*)pboard error:(NSString**)error
-{
-    if (![pboard canReadObjectForClasses:@[[NSString class]] options:@{}]) {
-        *error = @"Please select a string";
-        return nil;
-    }
-    
-    NSString* source = [pboard stringForType:NSPasteboardTypeString];
-    NSString* target = [NSURL stringWithUNC:source];
-    NSLog(@"convertFromUNC: source=%@, target=%@", source, target);
-    return target;
 }
 
 @end

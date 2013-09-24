@@ -10,6 +10,7 @@
 
 @interface NSURL (SMB)
 
-+ (NSString*)stringWithUNC:(NSString*)source;
++ (NSString*)stringWithStringUNC:(NSString*)source;
++ (NSString*)stringWithPasteboardUNC:(NSPasteboard*)pboard error:(NSString**)error;
 
 @end

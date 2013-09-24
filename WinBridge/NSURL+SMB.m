@@ -10,7 +10,7 @@
 
 @implementation NSURL (SMB)
 
-+ (NSString*)stringWithUNC:(NSString*)source
++ (NSString*)stringWithStringUNC:(NSString*)source
 {
     if (!source)
         return nil;
@@ -71,5 +71,19 @@
         pchDstLim = pchDst;
     return [NSString stringWithCharacters:pchDstMin length:pchDstLim - pchDstMin];
 }
+
++ (NSString*)stringWithPasteboardUNC:(NSPasteboard*)pboard error:(NSString**)error
+{
+    if (![pboard canReadObjectForClasses:@[[NSString class]] options:@{}]) {
+        *error = @"Please select a string";
+        return nil;
+    }
+
+    NSString* source = [pboard stringForType:NSPasteboardTypeString];
+    NSString* target = [NSURL stringWithStringUNC:source];
+    NSLog(@"convertFromUNC: source=%@, target=%@", source, target);
+    return target;
+}
+
 
 @end
