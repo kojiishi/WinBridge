@@ -13,4 +13,6 @@
 + (NSString*)stringWithStringUNC:(NSString*)source;
 + (NSString*)stringWithPasteboardUNC:(NSPasteboard*)pboard error:(NSString**)error;
 
+- (void)openInSharedWorkspaceSMB;
+
 @end

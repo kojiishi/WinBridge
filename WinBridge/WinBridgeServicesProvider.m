@@ -39,10 +39,7 @@
         return;
 
     NSURL* url = [NSURL URLWithString:target];
-    NSURL* folder = [url URLByDeletingLastPathComponent];
-    [[NSWorkspace sharedWorkspace] openURL:folder];
-    [[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:@[url]];
-    [[NSWorkspace sharedWorkspace] openURL:url];
+    [url openInSharedWorkspaceSMB];
 }
 
 @end

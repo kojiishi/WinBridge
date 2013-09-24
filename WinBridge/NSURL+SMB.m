@@ -85,5 +85,12 @@
     return target;
 }
 
+- (void)openInSharedWorkspaceSMB
+{
+    NSURL* folder = [self URLByDeletingLastPathComponent];
+    [[NSWorkspace sharedWorkspace] openURL:folder];
+    [[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:@[self]];
+    [[NSWorkspace sharedWorkspace] openURL:self];
+}
 
 @end
