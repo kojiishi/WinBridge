@@ -85,11 +85,23 @@
     return target;
 }
 
+- (NSURL*)URLByReplacingRoot:(NSURL*)root withURL:(NSURL*)newRoot
+{
+    if (![[root scheme] isEqualToString:[self scheme]] || ![[root host] isEqualToString:[self host]])
+        return nil;
+    NSString* myPath = [self path];
+    NSString* rootPath = [root path];
+    if (![myPath hasPrefix:rootPath])
+        return nil;
+    NSString* relativePath = [myPath substringFromIndex:[rootPath length]];
+    NSString* newPath = [[newRoot path] stringByAppendingPathComponent:relativePath];
+    NSURL* result = [NSURL fileURLWithPath:newPath];
+    NSLog(@"%@ mapped to %@", self, result);
+    return result;
+}
+
 - (NSURL*)localURLIfMounted
 {
-    NSString* scheme = [self scheme];
-    NSString* host = [self host];
-    NSString* path = [self path];
     NSArray* list = [[NSFileManager defaultManager]
         mountedVolumeURLsIncludingResourceValuesForKeys:@[NSURLTypeIdentifierKey]
         options:NSVolumeEnumerationSkipHiddenVolumes];
@@ -98,17 +110,10 @@
         if (![local getResourceValue:&remote forKey:NSURLVolumeURLForRemountingKey error:nil] ||
             !remote)
             continue;
-        NSLog(@"%@ -> %@", local, remote);
-        if (![[remote scheme] isEqualToString:scheme] || ![[remote host] isEqualToString:host])
-            continue;
-        NSString* remotePath = [remote path];
-        if (![path hasPrefix:remotePath])
-            continue;
-        NSString* relativeToVolume = [path substringFromIndex:[remotePath length]];
-        path = [[local path] stringByAppendingPathComponent:relativeToVolume];
-        NSURL* result = [NSURL fileURLWithPath:path];
-        NSLog(@"%@ mapped to %@", self, result);
-        return result;
+        NSLog(@"Network volume: %@ -> %@", local, remote);
+        NSURL* localMapped = [self URLByReplacingRoot:remote withURL:local];
+        if (localMapped)
+            return localMapped;
     }
     return nil;
 }

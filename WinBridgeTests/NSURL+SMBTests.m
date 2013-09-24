@@ -70,4 +70,9 @@
 }
 #endif
 
+- (void)testURLByReplacingRoot
+{
+    STAssertEqualObjects([NSURL URLWithString:@"file://localhost/Volumes/User/a/b/c"], [[NSURL URLWithString:@"smb://network/share/kojiishi/a/b/c"] URLByReplacingRoot:[NSURL URLWithString:@"smb://network/share/kojiishi"] withURL:[NSURL URLWithString:@"file://localhost/Volumes/User"]], @"RepacingHost failed");
+}
+
 @end

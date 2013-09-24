@@ -15,5 +15,6 @@
 
 - (void)openInSharedWorkspaceSMB;
 - (NSURL*)localURLIfMounted;
+- (NSURL*)URLByReplacingRoot:(NSURL*)root withURL:(NSURL*)newRoot;
 
 @end
