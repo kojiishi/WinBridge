@@ -85,7 +85,7 @@
     return target;
 }
 
-- (NSURL*)URLByReplacingRoot:(NSURL*)root withURL:(NSURL*)newRoot
+- (NSURL*)URLByReplacingRootURL:(NSURL*)root withURL:(NSURL*)newRoot
 {
     if (![[root scheme] isEqualToString:[self scheme]] || ![[root host] isEqualToString:[self host]])
         return nil;
@@ -111,7 +111,7 @@
             !remote)
             continue;
         NSLog(@"Network volume: %@ -> %@", local, remote);
-        NSURL* localMapped = [self URLByReplacingRoot:remote withURL:local];
+        NSURL* localMapped = [self URLByReplacingRootURL:remote withURL:local];
         if (localMapped)
             return localMapped;
     }
