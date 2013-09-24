@@ -14,5 +14,6 @@
 + (NSString*)stringWithPasteboardUNC:(NSPasteboard*)pboard error:(NSString**)error;
 
 - (void)openInSharedWorkspaceSMB;
+- (NSURL*)localURLIfMounted;
 
 @end

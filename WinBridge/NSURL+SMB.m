@@ -85,12 +85,52 @@
     return target;
 }
 
+- (NSURL*)localURLIfMounted
+{
+    NSString* scheme = [self scheme];
+    NSString* host = [self host];
+    NSString* path = [self path];
+    NSArray* list = [[NSFileManager defaultManager]
+        mountedVolumeURLsIncludingResourceValuesForKeys:@[NSURLTypeIdentifierKey]
+        options:NSVolumeEnumerationSkipHiddenVolumes];
+    for (NSURL* local in list) {
+        NSURL* remote;
+        if (![local getResourceValue:&remote forKey:NSURLVolumeURLForRemountingKey error:nil] ||
+            !remote)
+            continue;
+        NSLog(@"%@ -> %@", local, remote);
+        if (![[remote scheme] isEqualToString:scheme] || ![[remote host] isEqualToString:host])
+            continue;
+        NSString* remotePath = [remote path];
+        if (![path hasPrefix:remotePath])
+            continue;
+        NSString* relativeToVolume = [path substringFromIndex:[remotePath length]];
+        path = [[local path] stringByAppendingPathComponent:relativeToVolume];
+        NSURL* result = [NSURL fileURLWithPath:path];
+        NSLog(@"%@ mapped to %@", self, result);
+        return result;
+    }
+    return nil;
+}
+
 - (void)openInSharedWorkspaceSMB
 {
-    NSURL* folder = [self URLByDeletingLastPathComponent];
-    [[NSWorkspace sharedWorkspace] openURL:folder];
-    [[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:@[self]];
-    [[NSWorkspace sharedWorkspace] openURL:self];
+    // Simply calling NSWorkspace's openURL or activateFileViewerSelectingURLs
+    // will mount another instance if it's already mounted,
+    // so we check mounted volumes.
+    NSURL* local = [self localURLIfMounted];
+    if (!local) {
+//        NSURL* folder = [self URLByDeletingLastPathComponent];
+//        [[NSWorkspace sharedWorkspace] openURL:folder];
+        [[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:@[self]];
+        local = [self localURLIfMounted];
+        if (!local) {
+            NSAssert(NO, @"localURLIfMounted failed after AutoMount");
+            local = self;
+        }
+    }
+    NSLog(@"openURL: %@", local);
+    [[NSWorkspace sharedWorkspace] openURL:local];
 }
 
 @end

@@ -63,4 +63,11 @@
     STAssertTrue([[NSURL stringWithStringUNC:@"\\\\server\\s¥u3042\\d¥u3042\\f¥u3042"] isEqualToString:@"smb://server/s¥u3042/d¥u3042/f¥u3042"], @"Pre-text");
 }
 
+#if defined(NOT_TESTABLE)
+- (void)testLocalURLAfterAutoMount
+{
+    STAssertNil([[NSURL URLWithString:@"smb://gluesoft/User/kojiishi/a/b/c"] localURLIfMounted], @"oh");
+}
+#endif
+
 @end
