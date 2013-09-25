@@ -43,9 +43,9 @@
 
     // Post spaces
     STAssertTrue([[NSURL stringWithStringUNC:@"\\\\server\\share\\dir\\file  "] isEqualToString:@"smb://server/share/dir/file"], @"Post-spaces");
-    STAssertTrue([[NSURL stringWithStringUNC:@"\\\\server\\share\\dir\\fil e"] isEqualToString:@"smb://server/share/dir/fil e"], @"Post-spaces");
-    STAssertTrue([[NSURL stringWithStringUNC:@"\\\\server\\share\\dir\\fil e  "] isEqualToString:@"smb://server/share/dir/fil e"], @"Post-spaces");
-    STAssertTrue([[NSURL stringWithStringUNC:@" \\\\server\\share\\dir\\fil e  "] isEqualToString:@"smb://server/share/dir/fil e"], @"Post-spaces");
+    STAssertTrue([[NSURL stringWithStringUNC:@"\\\\server\\share\\dir\\fil e"] isEqualToString:@"smb://server/share/dir/fil%20e"], @"Post-spaces");
+    STAssertTrue([[NSURL stringWithStringUNC:@"\\\\server\\share\\dir\\fil e  "] isEqualToString:@"smb://server/share/dir/fil%20e"], @"Post-spaces");
+    STAssertTrue([[NSURL stringWithStringUNC:@" \\\\server\\share\\dir\\fil e  "] isEqualToString:@"smb://server/share/dir/fil%20e"], @"Post-spaces");
 
     // Preceding extra text
     STAssertTrue([[NSURL stringWithStringUNC:@"Hello: \\\\server\\share\\dir\\file"] isEqualToString:@"smb://server/share/dir/file"], @"Pre-text");
@@ -60,7 +60,7 @@
 
 - (void)testStringWithUNCi18n
 {
-    STAssertTrue([[NSURL stringWithStringUNC:@"\\\\server\\s¥u3042\\d¥u3042\\f¥u3042"] isEqualToString:@"smb://server/s¥u3042/d¥u3042/f¥u3042"], @"Pre-text");
+    STAssertTrue([[NSURL stringWithStringUNC:@"\\\\server\\s\u3042\\d\u3042\\f\u3042"] isEqualToString:@"smb://server/s%E3%81%82/d%E3%81%82/f%E3%81%82"], @"Pre-text");
 }
 
 #if defined(NOT_TESTABLE)

@@ -69,7 +69,10 @@
         return nil;
     if (!pchDstLim)
         pchDstLim = pchDst;
-    return [NSString stringWithCharacters:pchDstMin length:pchDstLim - pchDstMin];
+    NSString* urlString = [NSString stringWithCharacters:pchDstMin length:pchDstLim - pchDstMin];
+    NSString* escaped = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSLog(@"stringWithStringUNC: source=%@, url=%@, escaped=%@", source, urlString, escaped);
+    return escaped;
 }
 
 + (NSString*)stringWithPasteboardUNC:(NSPasteboard*)pboard error:(NSString**)error
@@ -81,7 +84,6 @@
 
     NSString* source = [pboard stringForType:NSPasteboardTypeString];
     NSString* target = [NSURL stringWithStringUNC:source];
-    NSLog(@"convertFromUNC: source=%@, target=%@", source, target);
     return target;
 }
 
@@ -120,6 +122,7 @@
 
 - (void)openInSharedWorkspaceSMB
 {
+    NSLog(@"openInSharedWorkspaceSMB: %@", self);
     // Simply calling NSWorkspace's openURL or activateFileViewerSelectingURLs
     // will mount another instance if it's already mounted,
     // so we check mounted volumes.

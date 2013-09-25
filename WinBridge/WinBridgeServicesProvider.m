@@ -14,6 +14,7 @@
 - (void)convertUNC:(NSPasteboard*)pboard userData:(NSString*)userData error:(NSString**)error
 {
     NSString* target = [NSURL stringWithPasteboardUNC:pboard error:error];
+    NSLog(@"convertUNC: target=%@", target);
     if (!target)
         return;
 
@@ -24,6 +25,7 @@
 - (void)copyUNC:(NSPasteboard*)pboard userData:(NSString*)userData error:(NSString**)error
 {
     NSString* target = [NSURL stringWithPasteboardUNC:pboard error:error];
+    NSLog(@"copyUNC: target=%@", target);
     if (!target)
         return;
 
@@ -35,10 +37,12 @@
 - (void)openUNC:(NSPasteboard*)pboard userData:(NSString*)userData error:(NSString**)error
 {
     NSString* target = [NSURL stringWithPasteboardUNC:pboard error:error];
+    NSLog(@"openUNC: target=%@", target);
     if (!target)
         return;
 
     NSURL* url = [NSURL URLWithString:target];
+    NSAssert(url, @"Cannot build from from <%@>", url);
     [url openInSharedWorkspaceSMB];
 }
 
