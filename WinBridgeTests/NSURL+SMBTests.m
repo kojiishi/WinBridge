@@ -70,14 +70,20 @@
 }
 #endif
 
-- (void)testURLByReplacingRoot
+
+- (void)testURLByReplacingRootRoot
 {
-    STAssertEqualObjects([NSURL URLWithString:@"file://localhost/Volumes/User/a/b/c"], [[NSURL URLWithString:@"smb://network/share/kojiishi/a/b/c"] URLByReplacingRootURL:[NSURL URLWithString:@"smb://network/share/kojiishi"] withURL:[NSURL URLWithString:@"file://localhost/Volumes/User"]], @"RepacingHost failed");
+    STAssertEqualObjects([NSURL URLWithString:@"file://localhost/Volumes/User/"], [[NSURL URLWithString:@"smb://network/share/kojiishi"] URLByReplacingRootURL:[NSURL URLWithString:@"smb://network/share/kojiishi"] withURL:[NSURL URLWithString:@"file://localhost/Volumes/User"]], @"ReplacingRoot failed");
+}
+
+- (void)testURLByReplacingRootSubDirectory
+{
+    STAssertEqualObjects([NSURL URLWithString:@"file://localhost/Volumes/User/a/b/c"], [[NSURL URLWithString:@"smb://network/share/kojiishi/a/b/c"] URLByReplacingRootURL:[NSURL URLWithString:@"smb://network/share/kojiishi"] withURL:[NSURL URLWithString:@"file://localhost/Volumes/User"]], @"ReplacingRoot failed");
 
     // Trailing slash variations
-    STAssertEqualObjects([NSURL URLWithString:@"file://localhost/Volumes/User/a/b/c"], [[NSURL URLWithString:@"smb://network/share/kojiishi/a/b/c"] URLByReplacingRootURL:[NSURL URLWithString:@"smb://network/share/kojiishi/"] withURL:[NSURL URLWithString:@"file://localhost/Volumes/User"]], @"RepacingHost failed");
-    STAssertEqualObjects([NSURL URLWithString:@"file://localhost/Volumes/User/a/b/c"], [[NSURL URLWithString:@"smb://network/share/kojiishi/a/b/c"] URLByReplacingRootURL:[NSURL URLWithString:@"smb://network/share/kojiishi"] withURL:[NSURL URLWithString:@"file://localhost/Volumes/User/"]], @"RepacingHost failed");
-    STAssertEqualObjects([NSURL URLWithString:@"file://localhost/Volumes/User/a/b/c"], [[NSURL URLWithString:@"smb://network/share/kojiishi/a/b/c"] URLByReplacingRootURL:[NSURL URLWithString:@"smb://network/share/kojiishi/"] withURL:[NSURL URLWithString:@"file://localhost/Volumes/User/"]], @"RepacingHost failed");
+    STAssertEqualObjects([NSURL URLWithString:@"file://localhost/Volumes/User/a/b/c"], [[NSURL URLWithString:@"smb://network/share/kojiishi/a/b/c"] URLByReplacingRootURL:[NSURL URLWithString:@"smb://network/share/kojiishi/"] withURL:[NSURL URLWithString:@"file://localhost/Volumes/User"]], @"ReplacingRoot failed");
+    STAssertEqualObjects([NSURL URLWithString:@"file://localhost/Volumes/User/a/b/c"], [[NSURL URLWithString:@"smb://network/share/kojiishi/a/b/c"] URLByReplacingRootURL:[NSURL URLWithString:@"smb://network/share/kojiishi"] withURL:[NSURL URLWithString:@"file://localhost/Volumes/User/"]], @"ReplacingRoot failed");
+    STAssertEqualObjects([NSURL URLWithString:@"file://localhost/Volumes/User/a/b/c"], [[NSURL URLWithString:@"smb://network/share/kojiishi/a/b/c"] URLByReplacingRootURL:[NSURL URLWithString:@"smb://network/share/kojiishi/"] withURL:[NSURL URLWithString:@"file://localhost/Volumes/User/"]], @"ReplacingRoot failed");
 }
 
 @end
