@@ -11,7 +11,10 @@
 @interface NSURL (SMB)
 
 + (NSString*)stringWithStringUNC:(NSString*)source;
++ (NSURL*)URLWithStringUNC:(NSString*)source;
+
 + (NSString*)stringWithPasteboardUNC:(NSPasteboard*)pboard error:(NSString**)error;
++ (NSURL*)URLWithPasteboardUNC:(NSPasteboard*)pboard error:(NSString**)error;
 
 - (void)openInSharedWorkspaceSMB;
 - (NSURL*)localURLIfMounted;

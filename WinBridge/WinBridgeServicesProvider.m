@@ -13,36 +13,34 @@
 
 - (void)convertUNC:(NSPasteboard*)pboard userData:(NSString*)userData error:(NSString**)error
 {
-    NSString* target = [NSURL stringWithPasteboardUNC:pboard error:error];
-    NSLog(@"convertUNC: target=%@", target);
-    if (!target)
+    NSString* urlString = [NSURL stringWithPasteboardUNC:pboard error:error];
+    NSLog(@"convertUNC: url=%@", urlString);
+    if (!urlString)
         return;
 
     [pboard clearContents];
-    [pboard writeObjects:@[target]];
+    [pboard writeObjects:@[urlString]];
 }
 
 - (void)copyUNC:(NSPasteboard*)pboard userData:(NSString*)userData error:(NSString**)error
 {
-    NSString* target = [NSURL stringWithPasteboardUNC:pboard error:error];
-    NSLog(@"copyUNC: target=%@", target);
-    if (!target)
+    NSString* urlString = [NSURL stringWithPasteboardUNC:pboard error:error];
+    NSLog(@"copyUNC: url=%@", urlString);
+    if (!urlString)
         return;
 
     NSPasteboard *generalPasteboard = [NSPasteboard generalPasteboard];
     [generalPasteboard declareTypes:@[NSStringPboardType] owner:nil];
-    [generalPasteboard setString:target forType:NSStringPboardType];
+    [generalPasteboard setString:urlString forType:NSStringPboardType];
 }
 
 - (void)openUNC:(NSPasteboard*)pboard userData:(NSString*)userData error:(NSString**)error
 {
-    NSString* target = [NSURL stringWithPasteboardUNC:pboard error:error];
-    NSLog(@"openUNC: target=%@", target);
-    if (!target)
+    NSURL* url = [NSURL URLWithPasteboardUNC:pboard error:error];
+    NSLog(@"openUNC: url=%@", url);
+    if (!url)
         return;
 
-    NSURL* url = [NSURL URLWithString:target];
-    NSAssert(url, @"Cannot build from from <%@>", url);
     [url openInSharedWorkspaceSMB];
 }
 

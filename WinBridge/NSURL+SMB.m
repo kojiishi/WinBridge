@@ -69,10 +69,20 @@
         return nil;
     if (!pchDstLim)
         pchDstLim = pchDst;
-    NSString* urlString = [NSString stringWithCharacters:pchDstMin length:pchDstLim - pchDstMin];
+    NSString* url = [NSString stringWithCharacters:pchDstMin length:pchDstLim - pchDstMin];
+    NSLog(@"stringWithStringUNC: source=%@, url=%@", source, url);
+    return url;
+}
+
++ (NSURL*)URLWithStringUNC:(NSString*)source
+{
+    NSString* urlString = [self stringWithStringUNC:source];
+    if (!urlString)
+        return nil;
     NSString* escaped = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    NSLog(@"stringWithStringUNC: source=%@, url=%@, escaped=%@", source, urlString, escaped);
-    return escaped;
+    NSURL* url = [NSURL URLWithString:escaped];
+    NSAssert(url, @"Cannot build URL from <%@>", urlString);
+    return url;
 }
 
 + (NSString*)stringWithPasteboardUNC:(NSPasteboard*)pboard error:(NSString**)error
@@ -84,6 +94,18 @@
 
     NSString* source = [pboard stringForType:NSPasteboardTypeString];
     NSString* target = [NSURL stringWithStringUNC:source];
+    return target;
+}
+
++ (NSURL*)URLWithPasteboardUNC:(NSPasteboard*)pboard error:(NSString**)error
+{
+    if (![pboard canReadObjectForClasses:@[[NSString class]] options:@{}]) {
+        *error = @"Please select a string";
+        return nil;
+    }
+
+    NSString* source = [pboard stringForType:NSPasteboardTypeString];
+    NSURL* target = [NSURL URLWithStringUNC:source];
     return target;
 }
 
