@@ -75,7 +75,7 @@
 
 - (void)testURLByReplacingRootRoot
 {
-    STAssertEqualObjects([NSURL URLWithString:@"file://localhost/Volumes/User/"], [[NSURL URLWithString:@"smb://network/share/kojiishi"] URLByReplacingRootURL:[NSURL URLWithString:@"smb://network/share/kojiishi"] withURL:[NSURL URLWithString:@"file://localhost/Volumes/User"]], @"ReplacingRoot failed");
+    STAssertEqualObjects([NSURL URLWithString:@"file://localhost/Volumes/NotExists"], [[NSURL URLWithString:@"smb://network/share/NotExists"] URLByReplacingRootURL:[NSURL URLWithString:@"smb://network/share/NotExists"] withURL:[NSURL URLWithString:@"file://localhost/Volumes/NotExists"]], @"ReplacingRoot failed");
 }
 
 - (void)testURLByReplacingRootSubDirectory
