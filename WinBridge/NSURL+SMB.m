@@ -162,7 +162,7 @@ static NSMutableArray* openUrlQueue;
     // If not mounted, kick auto mounter to mount the desired volume.
     // Since auto mounter runs in async, we observe NSWorkspaceDidMountNotification event.
     NSLog(@"openURL: not mounted, kick %@", self);
-    [[[NSWorkspace sharedWorkspace] notificationCenter] addObserver:[self copy] selector:@selector(didMount:) name:NSWorkspaceDidMountNotification object:nil];
+    [[[NSWorkspace sharedWorkspace] notificationCenter] addObserver:self selector:@selector(didMount:) name:NSWorkspaceDidMountNotification object:nil];
 
     // Because addObserer does not retain the observer, retain self.
     if (!openUrlQueue)
