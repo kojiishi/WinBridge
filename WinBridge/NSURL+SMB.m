@@ -120,7 +120,7 @@
     NSString* relativePath = [myPath substringFromIndex:[rootPath length]];
     NSString* newPath = [[newRoot path] stringByAppendingPathComponent:relativePath];
     NSURL* result = [NSURL fileURLWithPath:newPath];
-    NSLog(@"%@ mapped to %@", self, result);
+    NSLog(@"%@ -> %@", self, result);
     return result;
 }
 
@@ -177,7 +177,7 @@ static NSMutableArray* openUrlQueue;
 
 - (void)didMount:(NSNotification*)notification
 {
-    NSLog(@"NSURL+SMB.didMount self=%@", self);
+    NSLog(@"didMount self=%@", self);
     NSURL* local = [self localURLIfMounted];
     if (!local)
         return;
