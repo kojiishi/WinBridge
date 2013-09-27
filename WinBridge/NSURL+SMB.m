@@ -139,28 +139,53 @@
         if (localMapped)
             return localMapped;
     }
+    NSLog(@"No local URL for %@", self);
     return nil;
 }
+
+static NSMutableArray* openUrlQueue;
 
 - (void)openInSharedWorkspaceSMB
 {
     NSLog(@"openInSharedWorkspaceSMB: %@", self);
+
     // Simply calling NSWorkspace's openURL or activateFileViewerSelectingURLs
     // will mount another instance if it's already mounted,
-    // so we check mounted volumes.
+    // so we check mounted volumes first.
     NSURL* local = [self localURLIfMounted];
-    if (!local) {
-//        NSURL* folder = [self URLByDeletingLastPathComponent];
-//        [[NSWorkspace sharedWorkspace] openURL:folder];
-        [[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:@[self]];
-        local = [self localURLIfMounted];
-        if (!local) {
-            NSAssert(NO, @"localURLIfMounted failed after AutoMount");
-            local = self;
-        }
+    if (local) {
+        NSLog(@"openURL: already mounted at %@", local);
+        [[NSWorkspace sharedWorkspace] openURL:local];
+        return;
     }
-    NSLog(@"openURL: %@", local);
+
+    // If not mounted, kick auto mounter to mount the desired volume.
+    // Since auto mounter runs in async, we observe NSWorkspaceDidMountNotification event.
+    NSLog(@"openURL: not mounted, kick %@", self);
+    [[[NSWorkspace sharedWorkspace] notificationCenter] addObserver:[self copy] selector:@selector(didMount:) name:NSWorkspaceDidMountNotification object:nil];
+
+    // Because addObserer does not retain the observer, retain self.
+    if (!openUrlQueue)
+        openUrlQueue = [[NSMutableArray alloc] init];
+    [openUrlQueue addObject:self];
+
+    // When the target UNC is not mounted, openURL will kick auto mounter for the URL.
+    // If we call openUrl for a file, auto mounter will try to mount a file, so use its folder instead.
+    NSURL* folder = [self URLByDeletingLastPathComponent];
+    [[NSWorkspace sharedWorkspace] openURL:folder];
+}
+
+- (void)didMount:(NSNotification*)notification
+{
+    NSLog(@"NSURL+SMB.didMount self=%@", self);
+    NSURL* local = [self localURLIfMounted];
+    if (!local)
+        return;
+
     [[NSWorkspace sharedWorkspace] openURL:local];
+
+    [[[NSWorkspace sharedWorkspace] notificationCenter] removeObserver:self];
+    [openUrlQueue removeObject:self];
 }
 
 @end

@@ -65,14 +65,6 @@
     STAssertTrue([[[NSURL URLWithStringUNC:@"\\\\server\\s\u3042\\d\u3042\\f\u3042"] absoluteString] isEqualToString:@"smb://server/s%E3%81%82/d%E3%81%82/f%E3%81%82"], @"i18n URL");
 }
 
-#if defined(NOT_TESTABLE)
-- (void)testLocalURLAfterAutoMount
-{
-    STAssertNil([[NSURL URLWithString:@"smb://gluesoft/User/kojiishi/a/b/c"] localURLIfMounted], @"oh");
-}
-#endif
-
-
 - (void)testURLByReplacingRootRoot
 {
     STAssertEqualObjects([NSURL URLWithString:@"file://localhost/Volumes/NotExists"], [[NSURL URLWithString:@"smb://network/share/NotExists"] URLByReplacingRootURL:[NSURL URLWithString:@"smb://network/share/NotExists"] withURL:[NSURL URLWithString:@"file://localhost/Volumes/NotExists"]], @"ReplacingRoot failed");
@@ -87,5 +79,14 @@
     STAssertEqualObjects([NSURL URLWithString:@"file://localhost/Volumes/User/a/b/c"], [[NSURL URLWithString:@"smb://network/share/kojiishi/a/b/c"] URLByReplacingRootURL:[NSURL URLWithString:@"smb://network/share/kojiishi"] withURL:[NSURL URLWithString:@"file://localhost/Volumes/User/"]], @"ReplacingRoot failed");
     STAssertEqualObjects([NSURL URLWithString:@"file://localhost/Volumes/User/a/b/c"], [[NSURL URLWithString:@"smb://network/share/kojiishi/a/b/c"] URLByReplacingRootURL:[NSURL URLWithString:@"smb://network/share/kojiishi/"] withURL:[NSURL URLWithString:@"file://localhost/Volumes/User/"]], @"ReplacingRoot failed");
 }
+
+#if defined(NOT_TESTABLE)
+- (void)testOpenInSharedWorkspaceSMB
+{
+//    STAssertNil([[NSURL URLWithString:@"smb://gluesoft/User/kojiishi/a/b/c"] localURLIfMounted], @"oh");
+    // \\gluesoft\User\kojiishi\Pictures\Sample.jpg
+    [[NSURL URLWithStringUNC:@"\\\\gluesoft\\User\\kojiishi\\Pictures\\Sample.jpg"] openInSharedWorkspaceSMB];
+}
+#endif
 
 @end
