@@ -170,9 +170,14 @@ static NSMutableArray* openUrlQueue;
     [openUrlQueue addObject:self];
 
     // When the target UNC is not mounted, openURL will kick auto mounter for the URL.
-    // If we call openUrl for a file, auto mounter will try to mount a file, so use its folder instead.
-    NSURL* folder = [self URLByDeletingLastPathComponent];
-    [[NSWorkspace sharedWorkspace] openURL:folder];
+    // If we call openUrl for a file, auto mounter will try to mount a file, so use its volume instead.
+    NSArray* pathComponents = [self pathComponents];
+    NSAssert([pathComponents[0] isEqualToString:@"/"], @"[0]=%@", pathComponents[0]);
+    if (pathComponents.count < 2)
+        return;
+    NSURL* volume = [NSURL URLWithString:[NSString stringWithFormat:@"smb://%@/%@", self.host, pathComponents[1]]];
+    NSLog(@"Volume=%@", volume);
+    [[NSWorkspace sharedWorkspace] openURL:volume];
 }
 
 - (void)didMount:(NSNotification*)notification
